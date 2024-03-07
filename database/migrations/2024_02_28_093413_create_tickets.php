@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tickets', function (Blueprint $table) {
+            $table->bigIncrements('ticket_id');
             $table->unsignedBigInteger('queue_id')->index();
             $table->foreign('queue_id')->references('queue_id')->on('queues')->onDelete('cascade');
             $table->unsignedBigInteger('customer_id')->index();
@@ -23,9 +24,6 @@ return new class extends Migration
             $table->unsignedBigInteger('service_id')->index();
             $table->foreign('service_id')->references('service_id')->on('services')->onDelete('cascade');
             $table->string('service_type');
-            $table->unsignedBigInteger('technician_id')->nullable()->index();
-            $table->foreign('technician_id')->references('technician_id')->on('technicians')->onDelete('cascade');
-            $table->string('technician_name')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

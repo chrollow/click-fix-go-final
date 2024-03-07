@@ -46,7 +46,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Manage Suppliers</h3>
                     <p class="card-text">Manage suppliers with CRUD operations</p>
-                    <a href="/suppliers/index" class="btn btn-primary">Manage Suppliers</a>
+                    <a href="/supplier" class="btn btn-primary">Manage Suppliers</a>
                 </div>
             </div>
         </div>

@@ -7,11 +7,13 @@
         <div class="row">
             @foreach ($queues as $queue)
                 <div class="col-md-4 col-sm-6 device-card">
-                    <div class="red card help-button rounded-4 p-2">
+                    <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title">Queue: {{ $queue }}</h3>
-                            <p class="card-text">Manage tickets for queue {{ $queue }}</p>
-                            <a href="/queues/{{$queue}}/tickets" class="btn btn-primary">Click here</a>
+                            <h3 class="card-title">Queue: {{ $queue->queue_id }}</h3>
+                            <p class="card-text">Customer name: {{ $queue->customer_name }}</p>
+                            <p class="card-text">Status: {{ $queue->status }}</p>
+                            <a href="/queues/{{$queue->queue_id}}/tickets" class="btn btn-primary">Manage Queue</a>
+                            <a href="/queues/{{$queue->queue_id}}/finish" class="btn btn-primary">Finish Queue</a>
                         </div>
                     </div>
                 </div>
