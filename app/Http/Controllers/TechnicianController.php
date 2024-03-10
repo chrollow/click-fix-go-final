@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Technician;
+use Validator;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
-use Validator;
 
 class TechnicianController extends Controller
 {
@@ -19,9 +22,34 @@ class TechnicianController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return View::make('devices.create');
+        $userId = $request->userId;
+        $email = $request->email;
+        $name = $request->name;
+        return View::make('technicians.create',  ['userId' => $userId, 'email' => $email, 'name' => $name]);
+    }
+
+    public function register(){
+        return View::make('technicians.register');
+    }
+
+    public function registerStore(Request $request){
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'user' => $request->user,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $technician = Technician::create([
+            'user_id' => $user->id,
+            'technician_name' => $request->name,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+        ]);
+
+        return redirect()->route('technicians.index');
     }
 
     /**

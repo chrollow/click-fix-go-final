@@ -32,6 +32,8 @@ Route::prefix('/queue')->group(function () {
 
 Route::prefix('/technicians')->group(function () {
     Route::get('/index', [TechnicianController::class, 'index'])->name('technicians.index');
+    Route::get('/register', [TechnicianController::class, 'register'])->name('technicians.register');
+    Route::POST('/register/store', [TechnicianController::class, 'registerStore'])->name('technicians.registerStore');
     Route::get('/create', [TechnicianController::class, 'create'])->name('technicians.create');
     Route::post('/store', [TechnicianController::class, 'store'])->name('technicians.store');
     Route::get('/{id}/edit', [TechnicianController::class, 'edit'])->name('technicians.edit');

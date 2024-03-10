@@ -11,7 +11,7 @@
     @endif
 
     <div class="mb-3">
-        <a href="{{ route('technicians.create') }}" class="btn btn-success">Create Technician</a>
+        <a href="{{ route('technicians.register') }}" class="btn btn-success">Create Technician</a>
     </div>
 
     <table class="table">
