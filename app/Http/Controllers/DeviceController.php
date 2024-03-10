@@ -58,14 +58,6 @@ class DeviceController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
@@ -111,9 +103,11 @@ class DeviceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Device $device)
     {
-        //
+        //dd($device);
+        $device->delete();
+        return redirect()->route('devices.index')->with('success', 'Supplier deleted successfully.');
     }
 
     public function indexAdmin()

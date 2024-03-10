@@ -1,16 +1,17 @@
 <?php
 
+use App\Models\Technician;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SmartphoneController;
 use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\DeviceserviceController;
-use App\Models\Technician;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,7 @@ Route::prefix('/devices')->group(function () {
     Route::post('/store', [DeviceController::class, 'store'])->name('devices.store');
     Route::get('/{id}/edit', [DeviceController::class, 'edit'])->name('devices.edit');
     Route::put('/{id}/update', [DeviceController::class, 'update'])->name('devices.update');
+    Route::delete('/{device}/destroy', [DeviceController::class, 'destroy'])->name('devices.destroy');
 });
 
 Route::prefix('/queues')->group(function () {
@@ -78,20 +80,11 @@ Route::prefix('/supplier')->group(function () {
 });
 
 Route::prefix('/services')->group(function () {
-    Route::get('/{id}', [DeviceserviceController::class, 'index'])->name('smartphones.index');
-    Route::get('/create', [SmartphoneController::class, 'create'])->name('smartphones.create');
-    Route::get('/index', [ServiceController::class, 'adminIndex'])->name('services.index');
+    Route::get('/{id}', [DeviceserviceController::class, 'index'])->name('deviceservices.index');
+    Route::get('/create', [SmartphoneController::class, 'create'])->name('services.create');
 });
 
-
-Route::prefix('stock-suppliers')->group(function () {
-    Route::get('/', [StockSupplierController::class, 'index'])->name('stock-suppliers.index');
-    Route::get('/create', [StockSupplierController::class, 'create'])->name('stock-suppliers.create');
-    Route::post('/', [StockSupplierController::class, 'store'])->name('stock-suppliers.store');
-    Route::put('/{stock_supplier}/edit', [StockSupplierController::class, 'edit'])->name('stock-suppliers.edit');
-    Route::put('/{stock_supplier}', [StockSupplierController::class, 'update'])->name('stock-suppliers.update');
-    Route::delete('/{stock_supplier}', [StockSupplierController::class, 'destroy'])->name('stock-suppliers.destroy');
-});
+Route::get('/services/index', [ServiceController::class, 'index'])->name('services.index');
 
 Route::get('/login', function () {
     return view('login');
