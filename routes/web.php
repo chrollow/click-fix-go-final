@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SmartphoneController;
+use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\DeviceserviceController;
-use App\Http\Controllers\StockSupplierController;
-use App\Http\Controllers\SupplierController;
+use App\Models\Technician;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,7 +29,18 @@ Route::prefix('/queue')->group(function () {
     Route::get('/create/{id}', [QueueController::class, 'create'])->name('queue.create');
     Route::post('/store', [QueueController::class, 'store'])->name('queue.store');
 });
+
+Route::prefix('/technicians')->group(function () {
+    Route::get('/index', [TechnicianController::class, 'index'])->name('technicians.index');
+    Route::get('/create', [TechnicianController::class, 'create'])->name('technicians.create');
+    Route::post('/store', [TechnicianController::class, 'store'])->name('technicians.store');
+    Route::get('/{id}/edit', [TechnicianController::class, 'edit'])->name('technicians.edit');
+    Route::put('/{id}/update', [TechnicianController::class, 'update'])->name('technicians.update');
+    Route::delete('/{id}', [TechnicianController::class, 'destroy'])->name('technicians.destroy');
+});
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
 Route::prefix('/devices')->group(function () {
     Route::get('/index', [DeviceController::class, 'indexAdmin'])->name('devices.index');
     Route::get('/create', [DeviceController::class, 'create'])->name('devices.create');
@@ -65,6 +78,7 @@ Route::prefix('/supplier')->group(function () {
 Route::prefix('/services')->group(function () {
     Route::get('/{id}', [DeviceserviceController::class, 'index'])->name('smartphones.index');
     Route::get('/create', [SmartphoneController::class, 'create'])->name('smartphones.create');
+    Route::get('/index', [ServiceController::class, 'adminIndex'])->name('services.index');
 });
 
 

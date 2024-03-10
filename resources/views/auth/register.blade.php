@@ -61,6 +61,8 @@
                             </div>
                         </div>
 
+                        <Input type="hidden" name="user" value="customer">
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

@@ -20,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'last_name', // Add the last_name attribute here
+        'user', // Add the last_name attribute here
     ];
 
     /**
