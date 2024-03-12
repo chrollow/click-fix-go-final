@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SmartphoneController;
 use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\DeviceserviceController;
+use App\Http\Controllers\TechnicianQueueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,12 @@ Route::prefix('/technicians')->group(function () {
     Route::delete('/{id}', [TechnicianController::class, 'destroy'])->name('technicians.destroy');
 });
 
+Route::prefix('/technicians/queues')->group(function () {
+    Route::get('/index', [TechnicianQueueController::class, 'index'])->name('techniciansqueue.index');
+    Route::get('/{id}/edit', [TechnicianQueueController::class, 'edit'])->name('techniciansqueue.edit');
+    Route::post('/{id}/tickets/repair', [TechnicianQueueController::class, 'finish'])->name('techniciansqueue.finish');
+});
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::prefix('/devices')->group(function () {
@@ -58,7 +65,6 @@ Route::prefix('/queues')->group(function () {
     Route::get('/{id}/finish', [QueueController::class, 'finish'])->name('queues.finish');
     Route::get('/{id}/tickets', [TicketController::class, 'index'])->name('tickets.index');
     Route::get('/{id}/tickets/repair', [TicketController::class, 'repair'])->name('tickets.repair');
-    Route::get('/{id}/tickets/finish', [TicketController::class, 'finish'])->name('tickets.finish');
 });
 
 Route::prefix('/stock-suppliers')->group(function () {

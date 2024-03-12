@@ -24,7 +24,11 @@ return new class extends Migration
             $table->unsignedBigInteger('service_id')->index();
             $table->foreign('service_id')->references('service_id')->on('services')->onDelete('cascade');
             $table->string('service_type');
+            $table->unsignedBigInteger('technician_id')->index();
+            $table->foreign('technician_id')->references('technician_id')->on('services')->onDelete('cascade');
+            $table->string('technician_name');
             $table->string('status')->nullable();
+            $table->string('stocks')->nullable();
             $table->timestamps();
         });
     }

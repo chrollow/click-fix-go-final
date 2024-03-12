@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Stock;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,13 +29,18 @@ class TicketController extends Controller
         return redirect()->route('tickets.index', ['id' => $queue_id]);
     }
 
-    public function finish($id)
+    public function finish(Request $request)
     {
-        $queue_id = DB::table('tickets')->where('ticket_id', $id)->value('queue_id');
-        $device = Ticket::where('ticket_id', $id)->update([
+        $queue_id = DB::table('tickets')->where('ticket_id', $request->ticket_id)->value('queue_id');
+        $device = Ticket::where('ticket_id', $request->ticket_id)->update([
             'status' => 'finished',
         ]);
-        return redirect()->route('tickets.index', ['id' => $queue_id]);
+        $stock = Stock::where('stock_id', $request->stock_id)->first();
+            if ($stock) {
+                $stock->qty -= 1;
+                $stock->save();
+            }
+        return redirect()->route('techniciansqueue.edit', ['id' => $queue_id]);
     }
 
     public function create()

@@ -89,7 +89,6 @@ class QueueController extends Controller
     
     public function index()
     {
-        $tickets = DB::table('tickets')->get();
         $queues = DB::table('queues')->get();
         return View::make('queues.index', compact('queues'));
     }

@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stocks', function (Blueprint $table) {
-            $table->bigIncrements('stock_id');
-            $table->string('stock_name');
+        Schema::create('specialties', function (Blueprint $table) {
+            $table->bigIncrementsincrements('specialty_id');
+            $table->string('specialty_type');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('specialties');
     }
 };

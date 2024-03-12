@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stock_suppliers', function (Blueprint $table) {
-            $table->increments('stock_supplier_id');
+            $table->bigIncrementsincrements('stock_supplier_id');
             $table->unsignedInteger('stock_id')->index();
             $table->foreign('stock_id')->references('stock_id')->on('stocks')->onDelete('cascade');
             $table->string('stock_name');

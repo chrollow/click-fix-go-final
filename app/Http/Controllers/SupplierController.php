@@ -42,10 +42,10 @@ class SupplierController extends Controller
     }
 
     public function edit(Supplier $supplier)
-{
+    {
     // Load the supplier data and pass it to the view for editing
-    return view('suppliers.edit', compact('supplier'));
-}
+        return view('suppliers.edit', compact('supplier'));
+    }
 
 public function update(Supplier $supplier, Request $request)
 {
