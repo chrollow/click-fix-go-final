@@ -43,6 +43,8 @@
                                 @endforeach
                             </select>
                             {!! Form::hidden('ticket_id', $ticket->ticket_id) !!}
+                            {!! Form::hidden('technician_name', $user->name) !!}
+                            {!! Form::hidden('user_id', $user->id) !!}
                             <button type="submit" class="btn btn-danger">Finish</button>
                         </form>
                     </td>

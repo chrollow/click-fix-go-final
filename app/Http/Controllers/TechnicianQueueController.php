@@ -7,22 +7,34 @@ use View;
 use App\Models\Queue;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TechnicianQueueController extends Controller
 {
     public function index ()
     {
+        // $queues = DB::table('queues')
+        //     ->orderBy('queue_id', 'desc')
+        //     ->get();
+        
         $queues = DB::table('queues')
-            ->orderBy('queue_id', 'desc')
+            ->select('queues.*', DB::raw('SUM(1 * stocks.price) as order_total'))
+            ->leftjoin('tickets', 'queues.queue_id', '=', 'tickets.queue_id')
+            ->leftjoin('stocks', 'tickets.stock_id', '=', 'stocks.stock_id')
+            ->groupBy('queues.queue_id', 'queues.customer_id', 'queues.customer_name', 'queues.date_placed', 'queues.scheduled_date', 'queues.phone_number', 'queues.status', 'queues.created_at', 'queues.updated_at')
+            ->orderByDesc('queues.queue_id')
             ->get();
         return View::make('technicians.queueIndex', compact('queues'));
     }
 
     public function edit($id)
     {
+        $user = Auth::user();
         $tickets = Ticket::where('queue_id', $id)->get();
-        $stocks = DB::table('stocks')->get();
-        return View::make('technicians.queueEdit', compact('tickets', 'stocks'));
+        $stocks = DB::table('stocks')
+            ->orderBy('stock_name', 'asc')
+            ->get();
+        return View::make('technicians.queueEdit', compact('tickets', 'stocks', 'user'));
     }
 
     public function finish($id)

@@ -22,6 +22,7 @@
                 <th>Scheduled Date</th>
                 <th>Phone Number</th>
                 <th>Status</th>
+                <th>Total</th>
                 <th>Actions</th> <!-- Added a column for actions -->
             </tr>
         </thead>
@@ -33,6 +34,7 @@
                     <td>{{ $queue->scheduled_date }}</td>
                     <td>{{ $queue->phone_number }}</td>
                     <td>{{ $queue->status }}</td>
+                    <td>{{ $queue->order_total }}</td>
                     <td>
                         <a href="{{ route('techniciansqueue.edit', $queue->queue_id) }}" class="btn btn-primary">Edit</a>
                         <a href="{{ route('techniciansqueue.finish', $queue->queue_id) }}" class="btn btn-primary">Finish Queue</a>

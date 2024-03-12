@@ -1,24 +1,47 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="container">
-    <h1 class="text-center my-4">We Repair and Clean It All!</h1>
-    <p class="text-center mb-5">Choose your device type to explore our services:</p>
-    <div class="device-gallery">
-        <div class="row">
-            @foreach ($queues as $queue)
-                <div class="col-md-4 col-sm-6 device-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Queue: {{ $queue->queue_id }}</h3>
-                            <p class="card-text">Customer name: {{ $queue->customer_name }}</p>
-                            <p class="card-text">Status: {{ $queue->status }}</p>
-                            <a href="/queues/{{$queue->queue_id}}/tickets" class="btn btn-primary">Manage Queue</a>
-                            <a href="/queues/{{$queue->queue_id}}/finish" class="btn btn-primary">Finish Queue</a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+    <h1>Suppliers</h1>
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
+    @endif
+
+    <div class="mb-3">
+        <a href="{{ route('suppliers.create') }}" class="btn btn-success">Create Supplier</a>
     </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Scheduled Date</th>
+                <th>Phone Number</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Actions</th> <!-- Added a column for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($queues as $queue)
+                <tr>
+                    <td>{{ $queue->queue_id }}</td>
+                    <td>{{ $queue->customer_name }}</td>
+                    <td>{{ $queue->scheduled_date }}</td>
+                    <td>{{ $queue->phone_number }}</td>
+                    <td>{{ $queue->status }}</td>
+                    <td>{{ $queue->order_total }}</td>
+                    <td>
+                        <a href="{{ route('techniciansqueue.edit', $queue->queue_id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('techniciansqueue.finish', $queue->queue_id) }}" class="btn btn-primary">Finish Queue</a>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection

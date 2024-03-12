@@ -46,7 +46,8 @@ Route::prefix('/technicians')->group(function () {
 Route::prefix('/technicians/queues')->group(function () {
     Route::get('/index', [TechnicianQueueController::class, 'index'])->name('techniciansqueue.index');
     Route::get('/{id}/edit', [TechnicianQueueController::class, 'edit'])->name('techniciansqueue.edit');
-    Route::post('/{id}/tickets/repair', [TechnicianQueueController::class, 'finish'])->name('techniciansqueue.finish');
+    Route::get('/{id}/finish', [TechnicianQueueController::class, 'finish'])->name('techniciansqueue.finish');
+    Route::post('/tickets/finish', [TicketController::class, 'finish'])->name('tickets.finish');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

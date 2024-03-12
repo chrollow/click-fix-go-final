@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/homepage';
 
     /**
      * Create a new controller instance.
@@ -38,7 +38,7 @@ class LoginController extends Controller
     }
 
     public function redirectTo() {
-        return request()->redirect_to ?? '/';
+        return request()->redirect_to ?? '/homepage';
     }
 
 

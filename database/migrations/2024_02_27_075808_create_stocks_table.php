@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('stock_id');
             $table->string('stock_name');
             $table->integer('qty');
+            $table->integer('price');
             $table->timestamps();
         });
     }

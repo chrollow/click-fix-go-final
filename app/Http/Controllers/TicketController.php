@@ -31,9 +31,19 @@ class TicketController extends Controller
 
     public function finish(Request $request)
     {
+        //dd($request);
         $queue_id = DB::table('tickets')->where('ticket_id', $request->ticket_id)->value('queue_id');
-        $device = Ticket::where('ticket_id', $request->ticket_id)->update([
+        // $technician_id = DB::table('technicians')
+        // ->where('user_id', $request->id)
+        // ->value('technician_id');
+        $technician_id = DB::table('technicians')
+                ->where('user_id', $request->user_id)
+                ->value('technician_id');
+        $ticket = Ticket::where('ticket_id', $request->ticket_id)->update([
             'status' => 'finished',
+            'stock_id' => $request->stock_id,
+            'technician_name' => $request->technician_name,
+            'technician_id' => $technician_id,
         ]);
         $stock = Stock::where('stock_id', $request->stock_id)->first();
             if ($stock) {
