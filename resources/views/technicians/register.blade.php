@@ -76,6 +76,8 @@
                         </div>
 
                         <Input type="hidden" name="user" value="technician">
+                        <Input type="hidden" name="specialty_id" value="1">
+                        <Input type="hidden" name="specialty_type" value="smartphone">
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

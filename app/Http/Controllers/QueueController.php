@@ -13,9 +13,15 @@ class QueueController extends Controller
 {
     public function create($id)
     {
-        $user = Auth::user();
-        $deviceServices = Deviceservice::where('device_id', $id)->get();
-        return View::make('queue.create', compact('deviceServices', 'user'));
+        
+        if(Auth::check()){
+            $user = Auth::user();
+            $deviceServices = Deviceservice::where('device_id', $id)->get();
+            return View::make('queue.create', compact('deviceServices', 'user'));
+        }else{
+            return redirect()->route('login');
+        }
+        
     }
     public function store(Request $request)
     {
@@ -51,6 +57,8 @@ class QueueController extends Controller
                 $ticket->status = 'for diagnosis';
                 $ticket->save();
             } 
+        
+        return View::make('queues.receipt', compact('queue'));
             
         }else {
               // If no customer record exists, create a new one
@@ -83,7 +91,8 @@ class QueueController extends Controller
                   $ticket->service_type = $service_type;
                   $ticket->status = 'for diagnosis';
                   $ticket->save();
-                  } 
+                  }
+                  return View::make('queues.receipt', compact('queues')); 
         }
     }
     
@@ -97,6 +106,47 @@ class QueueController extends Controller
             ->orderByDesc('queues.queue_id')
             ->get();
         return View::make('queues.index', compact('queues'));
+    }
+
+    public function queueIndex()
+    {
+        $user = Auth::user();
+        $customer = DB::table('customers')
+            ->where('user_id', $user->id)
+            ->first();
+        
+        if ($customer) {
+            $queues = DB::table('queues')
+            ->select('queues.*', DB::raw('SUM(1 * stocks.price) as order_total'))
+            ->where('queues.customer_id', $customer->customer_id)
+            ->leftjoin('tickets', 'queues.queue_id', '=', 'tickets.queue_id')
+            ->leftjoin('stocks', 'tickets.stock_id', '=', 'stocks.stock_id')
+            ->groupBy('queues.queue_id', 'queues.customer_id', 'queues.customer_name', 'queues.date_placed', 'queues.scheduled_date', 'queues.phone_number', 'queues.status', 'queues.created_at', 'queues.updated_at')
+            ->orderByDesc('queues.queue_id')
+            ->get();
+            // $queues = DB::table('queues')
+            //     ->where('customer_id', $customer->customer_id)
+            //     ->get();
+        } else {
+            $queues = [];
+        }
+        return View::make('queues.customerQueues', compact('queues'));
+    }
+
+    public function queueDestroy(Request $request)
+    {
+        // Delete the supplier
+        $queue = Queue::find($request->queue_id);
+
+    // Check if the queue instance exists
+        if ($queue) {
+            // Delete the queue
+            $queue->delete();
+            return redirect()->route('Queues')->with('success', 'Queue deleted successfully.');
+        } else {
+            // Queue not found, handle the situation (e.g., show an error message)
+            return redirect()->route('Queues')->with('error', 'Queue not found.');
+        }
     }
 
     public function finish($id)

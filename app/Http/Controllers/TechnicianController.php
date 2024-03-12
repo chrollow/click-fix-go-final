@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Technician;
 use Validator;
 use App\Models\User;
+use App\Models\Device;
+use App\Models\Technician;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -47,6 +48,8 @@ class TechnicianController extends Controller
             'technician_name' => $request->name,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
+            'specialty_id' => $request->specialty_id,
+            'specialty_type' => $request->specialty_type,
         ]);
 
         return redirect()->route('technicians.index');
@@ -94,43 +97,28 @@ class TechnicianController extends Controller
      */
     public function edit($id)
     {
-        $device = Device::where('device_id', $id)->first();
-        return View::make('devices.edit', compact('device'));
+        $specialties = DB::table('specialties')->get();
+        $technician = Technician::where('technician_id', $id)->first();
+        return View::make('technicians.edit', compact('technician', 'specialties'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $rules = [
-            'image' => 'mimes:jpg,bmp,png',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) 
-        {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }else if ($request->file('image')) 
-        {
-            $path = Storage::putFileAs(
-                'public/images/devices',
-                $request->file('image'),
-                $request->file('image')->getClientOriginalName()
-            );
-
-            $device = Device::where('device_id', $id)->update([
-                'device_type' => $request->device_type,
-                'image' => 'storage/images/devices/' . $request->file('image')->getClientOriginalName()
-            ]);
-        }else{
-            $device = Device::where('device_id', $id)->update([
-                'device_type' => $request->device_type,
-            ]);
-        }
+        $validatedData = $request->validate([
+            'supplier_name' => 'required|string|max:255',
+            'supplier_email' => 'required|email',
+            'contact_number' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+        ]);
+    
+        // Update the supplier with validated data
+        $supplier->update($validatedData);
+    
+        // Redirect back with success message
+        return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully.');
     }
     /**
      * Remove the specified resource from storage.

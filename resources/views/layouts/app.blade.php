@@ -40,7 +40,10 @@
           @auth
           <li class="nav-item">
             <a class="nav-link" href="{{ route('profile') }}">{{ __('Profile') }}</a>
-        </li>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('Queues') }}">{{ __('Queues') }}</a>
+          </li>
             <li class="nav-item">
               <a class="nav-link" href="#">{{ __('Password') }}</a>
             </li>

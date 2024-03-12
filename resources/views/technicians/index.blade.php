@@ -20,6 +20,7 @@
                 <th>Name</th>
                 <th>Contact Number</th>
                 <th>Email</th>
+                <th>Specialty</th>
                 <th>Actions</th> <!-- Added a column for actions -->
             </tr>
         </thead>
@@ -29,6 +30,7 @@
                     <td>{{ $technician->technician_name }}</td>
                     <td>{{ $technician->phone_number }}</td>
                     <td>{{ $technician->email }}</td>
+                    <td>{{ $technician->specialty_type }}</td>
                     <td>
                         <a href="{{ route('technicians.edit', $technician->technician_id) }}" class="btn btn-primary">Edit</a>
                         <form method="post" action="{{ route('technicians.destroy', $technician->technician_id) }}">

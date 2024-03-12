@@ -14,5 +14,7 @@ class Technician extends Model
         'user_id',
         'phone_number',
         'email',
+        'specialty_id',
+        'specialty_type',
     ];
 }

@@ -32,8 +32,11 @@
                     <td>{{ $queue->status }}</td>
                     <td>{{ $queue->order_total }}</td>
                     <td>
-                        <a href="{{ route('techniciansqueue.edit', $queue->queue_id) }}" class="btn btn-primary">Edit</a>
-                        <a href="{{ route('techniciansqueue.finish', $queue->queue_id) }}" class="btn btn-primary">Finish Queue</a>
+                        <form method="post" action="{{ route('queues.destroy') }}">
+                            @csrf
+                            {!! Form::hidden('queue_id', $queue->queue_id) !!}
+                            <button type="submit" class="btn btn-danger">Cancel</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

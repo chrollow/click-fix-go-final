@@ -39,7 +39,7 @@ Route::prefix('/technicians')->group(function () {
     Route::get('/create', [TechnicianController::class, 'create'])->name('technicians.create');
     Route::post('/store', [TechnicianController::class, 'store'])->name('technicians.store');
     Route::get('/{id}/edit', [TechnicianController::class, 'edit'])->name('technicians.edit');
-    Route::put('/{id}/update', [TechnicianController::class, 'update'])->name('technicians.update');
+    Route::put('/update', [TechnicianController::class, 'update'])->name('technicians.update');
     Route::delete('/{id}', [TechnicianController::class, 'destroy'])->name('technicians.destroy');
 });
 
@@ -66,6 +66,11 @@ Route::prefix('/queues')->group(function () {
     Route::get('/{id}/finish', [QueueController::class, 'finish'])->name('queues.finish');
     Route::get('/{id}/tickets', [TicketController::class, 'index'])->name('tickets.index');
     Route::get('/{id}/tickets/repair', [TicketController::class, 'repair'])->name('tickets.repair');
+});
+
+Route::prefix('/queues/customer')->group(function () {
+    Route::get('/index', [QueueController::class, 'queueIndex'])->name('Queues');
+    Route::post('/destroy', [QueueController::class, 'queueDestroy'])->name('queues.destroy');
 });
 
 Route::prefix('/stock-suppliers')->group(function () {
