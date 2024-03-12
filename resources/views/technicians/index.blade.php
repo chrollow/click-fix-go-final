@@ -33,9 +33,10 @@
                     <td>{{ $technician->specialty_type }}</td>
                     <td>
                         <a href="{{ route('technicians.edit', $technician->technician_id) }}" class="btn btn-primary">Edit</a>
-                        <form method="post" action="{{ route('technicians.destroy', $technician->technician_id) }}">
+                        <form method="post" action="{{ route('technicians.destroy') }}">
                             @csrf
                             @method('DELETE')
+                            <input type="hidden" name="technician_id" value="{{ $technician->technician_id }}">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </td>

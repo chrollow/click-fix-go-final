@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -38,7 +39,13 @@ class LoginController extends Controller
     }
 
     public function redirectTo() {
-        return request()->redirect_to ?? '/homepage';
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return route('dashboard.index');
+        }else if (Auth::check() && ( Auth::user()->role === 'admin' || Auth::user()->role === 'technician')) {
+            return route('techniciansqueue.index');
+        }
+
+        return '/homepage';
     }
 
 

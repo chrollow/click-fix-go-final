@@ -107,25 +107,39 @@ class TechnicianController extends Controller
      */
     public function update(Request $request)
     {
-        $validatedData = $request->validate([
-            'supplier_name' => 'required|string|max:255',
-            'supplier_email' => 'required|email',
-            'contact_number' => 'required|string|max:20',
-            'address' => 'required|string|max:255',
+        
+        $specialty_type = DB::table('specialties')
+                ->where('specialty_id', $request->specialty_id)
+                ->value('specialty_type');
+        $technician = Technician::where('technician_id', $request->technician_id)->update([
+            'technician_name' => $request->technician_name,
+            'phone_number' => $request->phone_number,
+            'email' => $request->phone_number,
+            'specialty_id' => $request->specialty_id,
+            'specialty_type' => $specialty_type,
         ]);
     
-        // Update the supplier with validated data
-        $supplier->update($validatedData);
+        // Update the supplier with validated dat
     
         // Redirect back with success message
-        return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully.');
+        return redirect()->route('technicians.index')->with('success', 'Supplier updated successfully.');
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $technician = Technician::find($request->technician_id);
+
+    // Check if the queue instance exists
+        if ($technician) {
+            // Delete the queue
+            $technician->delete();
+            return redirect()->route('technician.index')->with('success', 'Queue deleted successfully.');
+        } else {
+            // Queue not found, handle the situation (e.g., show an error message)
+            return redirect()->route('technicians.index')->with('error', 'Queue not found.');
+        }
     }
 
     public function indexAdmin()

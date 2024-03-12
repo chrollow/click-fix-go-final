@@ -59,6 +59,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="blue card help-button rounded-4 p-2">
+                <div class="card-body">
+                    <h3 class="card-title">Manage Specialties</h3>
+                    <p class="card-text">Manage specialties with CRUD operations</p>
+                    <a href="/services/index" class="btn btn-primary">Manage Specialties</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

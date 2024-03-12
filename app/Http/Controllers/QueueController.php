@@ -41,6 +41,7 @@ class QueueController extends Controller
             $queue->scheduled_date = $request->scheduled_date;
             $queue->phone_number = $request->phone_number;
             $queue->status = 'for diagnosis';
+            $queue->device_type = $request->device_type[0];
             $queue->save();
 
             foreach($request->service_id as $service){
@@ -75,6 +76,7 @@ class QueueController extends Controller
               $queue->date_placed = $request->date_placed;
               $queue->scheduled_date = $request->scheduled_date;
               $queue->phone_number = $request->phone_number;
+              $queue->device_type = $request->device_type[0];
               $queue->status = 'for diagnosis';
               $queue->save();
   

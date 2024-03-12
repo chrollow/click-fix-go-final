@@ -40,17 +40,29 @@ Route::prefix('/technicians')->group(function () {
     Route::post('/store', [TechnicianController::class, 'store'])->name('technicians.store');
     Route::get('/{id}/edit', [TechnicianController::class, 'edit'])->name('technicians.edit');
     Route::put('/update', [TechnicianController::class, 'update'])->name('technicians.update');
-    Route::delete('/{id}', [TechnicianController::class, 'destroy'])->name('technicians.destroy');
+    Route::delete('/destroy', [TechnicianController::class, 'destroy'])->name('technicians.destroy');
 });
 
-Route::prefix('/technicians/queues')->group(function () {
-    Route::get('/index', [TechnicianQueueController::class, 'index'])->name('techniciansqueue.index');
-    Route::get('/{id}/edit', [TechnicianQueueController::class, 'edit'])->name('techniciansqueue.edit');
-    Route::get('/{id}/finish', [TechnicianQueueController::class, 'finish'])->name('techniciansqueue.finish');
-    Route::post('/tickets/finish', [TicketController::class, 'finish'])->name('tickets.finish');
+Route::middleware(['admin_or_technician'])->group(function () {
+    // Define routes accessible by admin or technician users here
+    Route::prefix('/technicians/queues')->group(function () {
+        Route::get('/index', [TechnicianQueueController::class, 'index'])->name('techniciansqueue.index');
+        Route::get('/{id}/edit', [TechnicianQueueController::class, 'edit'])->name('techniciansqueue.edit');
+        Route::get('/{id}/finish', [TechnicianQueueController::class, 'finish'])->name('techniciansqueue.finish');
+        Route::post('/tickets/finish', [TicketController::class, 'finish'])->name('tickets.finish');
+    });
+    // Add more routes as needed
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+
+// Route::group(['middleware' => 'admin'], function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+// });
+Route::middleware(['admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    
+});
 
 Route::prefix('/devices')->group(function () {
     Route::get('/index', [DeviceController::class, 'indexAdmin'])->name('devices.index');

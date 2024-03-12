@@ -9,4 +9,5 @@ class Queue extends Model
 {
     use HasFactory;
     protected $primaryKey = 'queue_id';
+    
 }

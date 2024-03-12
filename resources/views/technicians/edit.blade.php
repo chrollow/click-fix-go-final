@@ -23,6 +23,7 @@
         <div>
             <label for="supplier_name">Technician Name</label>
             <input type="text" id="supplier_name" name="technician_name" value="{{ $technician->technician_name }}" placeholder="Technician Name"/>
+            <input type="hidden" name="technician_id" value="{{ $technician->technician_id }}">
         </div>
 
         <div>
@@ -37,7 +38,7 @@
 
         <div>
             <label for="address">Specialty</label>
-            <select id="specialty_type" name="specialty_type">
+            <select id="specialty_type" name="specialty_id">
                 <option value="">Select Specialty</option>
                 @foreach($specialties as $specialty)
                     <option value="{{ $specialty->specialty_id }}">{{ $specialty->specialty_type }}</option>
