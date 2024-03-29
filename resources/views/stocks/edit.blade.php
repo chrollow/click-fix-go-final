@@ -16,7 +16,7 @@
                 </ul>
             </div>
             @endif
-            <form method="post" action="{{ route('stocks.update', ['stock' => $stock->id]) }}">
+            <form method="post" action="{{ route('stocks.update', $stock->stock_id) }}">
                 @csrf
                 @method('PUT')
                 <div class="form-group">

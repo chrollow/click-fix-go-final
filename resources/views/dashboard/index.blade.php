@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <h3 class="card-title">CRUD Services</h3>
                     <p class="card-text">Manage services with CRUD operations</p>
-                    <a href="/services/index" class="btn btn-primary">Manage Services</a>
+                    <a href="{{route('services.index')}}" class="btn btn-primary">Manage Services</a>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Manage Suppliers</h3>
                     <p class="card-text">Manage suppliers with CRUD operations</p>
-                    <a href="/stocks" class="btn btn-primary">Manage Suppliers</a>
+                    <a href="{{route('suppliers.index')}}" class="btn btn-primary">Manage Suppliers</a>
                 </div>
             </div>
         </div>

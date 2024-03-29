@@ -36,9 +36,9 @@
                         <td>{{ $stock->price }}</td>
                         <td>
                             <div class="d-flex">
-                                {{-- <a href="{{ route('stocks.edit', ['stock' => $stock->id]) }}" class="btn btn-primary">Edit</a> --}}
+                                <a href="{{ route('stocks.edit', $stock->stock_id) }}" class="btn btn-primary">Edit</a>
 
-                                {{-- <form method="post" action="{{ route('stocks.destroy', ['stock' => $stock->id]) }}"> --}}
+                                <form method="post" action="{{ route('stocks.destroy',$stock->stock_id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>

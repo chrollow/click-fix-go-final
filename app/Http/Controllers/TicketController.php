@@ -31,7 +31,6 @@ class TicketController extends Controller
 
     public function finish(Request $request)
     {
-        //dd($request);
         $queue_id = DB::table('tickets')->where('ticket_id', $request->ticket_id)->value('queue_id');
         // $technician_id = DB::table('technicians')
         // ->where('user_id', $request->id)

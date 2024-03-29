@@ -7,13 +7,16 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SmartphoneController;
 use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\DeviceserviceController;
 use App\Http\Controllers\TechnicianQueueController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SpecialtyController;
+use App\Models\Service;
+use App\Models\Specialty;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,19 +59,26 @@ Route::middleware(['admin_or_technician'])->group(function () {
     // Add more routes as needed
 });
 
-Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
-Route::get('/stocks/create', [StockController::class, 'create'])->name('stocks.create');
-Route::post('/stocks', [StockController::class, 'store'])->name('stocks.store');
-Route::get('/stocks/{stock}/edit', [StockController::class, 'edit'])->name('stocks.edit');
-Route::put('/stocks/{stock}', [StockController::class, 'update'])->name('stocks.update');
-Route::delete('/stocks/{stock}', [StockController::class, 'destroy'])->name('stocks.destroy');
+Route::prefix('/stocks')->group(function () {
+    Route::get('', [StockController::class, 'index'])->name('stocks.index');
+    Route::get('/create', [StockController::class, 'create'])->name('stocks.create');
+    Route::post('/store', [StockController::class, 'store'])->name('stocks.store');
+    Route::get('/{stock}/edit', [StockController::class, 'edit'])->name('stocks.edit');
+    Route::put('/{stock}/update', [StockController::class, 'update'])->name('stocks.update');
+    Route::delete('/{stock}/destroy', [StockController::class, 'destroy'])->name('stocks.destroy');
+});
 
-// Route::group(['middleware' => 'admin'], function () {
-//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-// });
+Route::prefix('/specialties')->group(function () {
+    Route::get('', [SpecialtyController::class, 'show'])->name('specialties.index');
+    Route::get('/create', [SpecialtyController::class, 'create'])->name('specialties.create');
+    Route::post('/store', [SpecialtyController::class, 'store'])->name('specialties.store');
+    Route::get('/{id}/edit', [SpecialtyController::class, 'edit'])->name('specialties.edit');
+    Route::put('/{id}/update', [SpecialtyController::class, 'update'])->name('specialties.update');
+    Route::delete('/{specialty}/destroy', [SpecialtyController::class, 'destroy'])->name('specialties.destroy');
+});
+
 Route::middleware(['admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    
 });
 
 Route::prefix('/devices')->group(function () {
@@ -112,10 +122,18 @@ Route::prefix('/supplier')->group(function () {
 
 Route::prefix('/services')->group(function () {
     Route::get('/{id}', [DeviceserviceController::class, 'index'])->name('deviceservices.index');
-    Route::get('/create', [SmartphoneController::class, 'create'])->name('services.create');
 });
 
-Route::get('/services/index', [ServiceController::class, 'index'])->name('services.index');
+
+//services
+Route::prefix('/index')->group(function () {
+    Route::get('',  [DeviceController::class, 'index'])->name('services.index');
+    Route::get('/{id}/create',  [ServiceController::class, 'create'])->name('services.create');
+    Route::post('/store', [ServiceController::class, 'store'])->name('services.store');
+    Route::get('/{service}/edit', [ServiceController::class, 'edit'])->name('services.edit');
+    Route::put('/{id}/update', [ServiceController::class, 'update'])->name('services.update');
+    Route::delete('/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
+});
 
 Route::get('/login', function () {
     return view('login');

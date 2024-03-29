@@ -135,7 +135,7 @@ class TechnicianController extends Controller
         if ($technician) {
             // Delete the queue
             $technician->delete();
-            return redirect()->route('technician.index')->with('success', 'Queue deleted successfully.');
+            return redirect()->route('technicians.index')->with('success', 'Queue deleted successfully.');
         } else {
             // Queue not found, handle the situation (e.g., show an error message)
             return redirect()->route('technicians.index')->with('error', 'Queue not found.');
