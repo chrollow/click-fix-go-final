@@ -40,13 +40,13 @@ class QueueController extends Controller
             $queue->date_placed = $request->date_placed;
             $queue->scheduled_date = $request->scheduled_date;
             $queue->phone_number = $request->phone_number;
-            $queue->status = 'for diagnosis';
             $queue->device_type = $request->device_type[0];
+            $queue->status = 'for diagnosis';
             $queue->save();
 
             foreach($request->service_id as $service){
                 $ticket = new Ticket();
-                $ticket->queue_id = $queue->id;
+                $ticket->queue_id = $queue->queue_id;
                 $ticket->customer_id = $existingCustomer->customer_id;
                 $ticket->customer_name = $request->customer_name;
                 $ticket->device_id = $request->device_id;
@@ -58,8 +58,7 @@ class QueueController extends Controller
                 $ticket->status = 'for diagnosis';
                 $ticket->save();
             } 
-        
-        return View::make('queues.receipt', compact('queue'));
+            return redirect()->route('homepage.index')->with('success', 'Booking Complete');
             
         }else {
               // If no customer record exists, create a new one
@@ -82,7 +81,7 @@ class QueueController extends Controller
   
               foreach($request->service_id as $service){
                   $ticket = new Ticket();
-                  $ticket->queue_id = $queue->id;
+                  $ticket->queue_id = $queue->queue_id;
                   $ticket->customer_id = $customer->customer_id;
                   $ticket->customer_name = $request->customer_name;
                   $ticket->device_id = $request->device_id;
@@ -93,8 +92,8 @@ class QueueController extends Controller
                   $ticket->service_type = $service_type;
                   $ticket->status = 'for diagnosis';
                   $ticket->save();
-                  }
-                  return View::make('queues.receipt', compact('queues')); 
+                  } 
+                  return redirect()->route('homepage.index')->with('success', 'Booking Complete');
         }
     }
     
@@ -104,7 +103,7 @@ class QueueController extends Controller
             ->select('queues.*', DB::raw('SUM(1 * stocks.price) as order_total'))
             ->leftjoin('tickets', 'queues.queue_id', '=', 'tickets.queue_id')
             ->leftjoin('stocks', 'tickets.stock_id', '=', 'stocks.stock_id')
-            ->groupBy('queues.queue_id', 'queues.customer_id', 'queues.customer_name', 'queues.date_placed', 'queues.scheduled_date', 'queues.phone_number', 'queues.status', 'queues.created_at', 'queues.updated_at')
+            ->groupBy('queues.queue_id', 'queues.customer_id', 'queues.customer_name', 'queues.date_placed', 'queues.scheduled_date', 'queues.phone_number', 'queues.status', 'queues.created_at', 'queues.updated_at', 'queues.device_type')
             ->orderByDesc('queues.queue_id')
             ->get();
         return View::make('queues.index', compact('queues'));
@@ -123,7 +122,7 @@ class QueueController extends Controller
             ->where('queues.customer_id', $customer->customer_id)
             ->leftjoin('tickets', 'queues.queue_id', '=', 'tickets.queue_id')
             ->leftjoin('stocks', 'tickets.stock_id', '=', 'stocks.stock_id')
-            ->groupBy('queues.queue_id', 'queues.customer_id', 'queues.customer_name', 'queues.date_placed', 'queues.scheduled_date', 'queues.phone_number', 'queues.status', 'queues.created_at', 'queues.updated_at')
+            ->groupBy('queues.queue_id', 'queues.customer_id', 'queues.customer_name', 'queues.date_placed', 'queues.scheduled_date', 'queues.phone_number', 'queues.status', 'queues.created_at', 'queues.updated_at', 'queues.device_type')
             ->orderByDesc('queues.queue_id')
             ->get();
             // $queues = DB::table('queues')

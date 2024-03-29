@@ -6,9 +6,22 @@
     <p class="text-center mb-5">Choose your device type to explore our services:</p>
     <div class="row">
         @foreach ($types as $type)
-        <div class="col-md-4 col-sm-6 mb-4">
+        {{-- <div class="col-md-4 col-sm-6 mb-4">
             <div class="blue card help-button rounded-4 p-2">
                 <img src="{{ asset($type->image) }}" alt="{{ $type->device_type }}" class="card-img-top">
+                <div class="card-body">
+                    <h3 class="card-title">{{ $type->device_type }}</h3>
+                    <p class="card-text">Expert repairs for all major brands and models.</p>
+                    <a href="/services/{{$type->device_id}}" class="btn btn-primary">See {{ $type->device_type }} Services</a>
+                </div>
+            </div>
+        </div> --}}
+
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="purple card help-button rounded-4 p-2 h-100">
+                <div>
+                    <img src="{{ asset($type->image) }}" alt="{{ $type->device_type }}" class="card-img-top" style="object-fit: cover; width: 100%; height: 100%;">
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">{{ $type->device_type }}</h3>
                     <p class="card-text">Expert repairs for all major brands and models.</p>

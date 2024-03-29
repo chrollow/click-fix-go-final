@@ -14,7 +14,7 @@
         <a href="{{ route('technicians.register') }}" class="btn btn-success">Create Technician</a>
     </div>
 
-    <table class="table">
+    <table class="table table-dark">
         <thead>
             <tr>
                 <th>Name</th>

@@ -47,6 +47,13 @@ class TechnicianQueueController extends Controller
         $queue = Queue::where('queue_id', $id)->update([
             'status' => 'finished',
         ]);
-        return redirect()->route('techniciansqueue.index');
+        $queues = DB::table('queues')
+            ->select('queues.*', DB::raw('SUM(1 * stocks.price) as order_total'))
+            ->leftjoin('tickets', 'queues.queue_id', '=', 'tickets.queue_id')
+            ->leftjoin('stocks', 'tickets.stock_id', '=', 'stocks.stock_id')
+            ->groupBy('queues.queue_id', 'queues.customer_id', 'queues.customer_name', 'queues.date_placed', 'queues.scheduled_date', 'queues.phone_number', 'queues.status', 'queues.created_at', 'queues.updated_at', 'queues.device_type')
+            ->orderByDesc('queues.queue_id')
+            ->get();
+        return View::make('queues.index', compact('queues'));
     }
 }

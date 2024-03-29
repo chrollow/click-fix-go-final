@@ -55,6 +55,7 @@ class DeviceController extends Controller
         $device->device_type = $request->device_type;
         $device->image = 'storage/images/devices/' . $request->file('image')->getClientOriginalName();
         $device->save();
+        return redirect()->route('devices.index')->with('success', 'Supplier deleted successfully.');
     }
 
     /**
@@ -94,10 +95,12 @@ class DeviceController extends Controller
                 'device_type' => $request->device_type,
                 'image' => 'storage/images/devices/' . $request->file('image')->getClientOriginalName()
             ]);
+            return redirect()->route('devices.index')->with('success', 'Supplier deleted successfully.');
         }else{
             $device = Device::where('device_id', $id)->update([
                 'device_type' => $request->device_type,
             ]);
+            return redirect()->route('devices.index')->with('success', 'Supplier deleted successfully.');
         }
     }
     /**

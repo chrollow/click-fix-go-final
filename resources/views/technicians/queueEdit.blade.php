@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Suppliers</h1>
+    <h1>Tickets</h1>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -10,11 +10,7 @@
         </div>
     @endif
 
-    <div class="mb-3">
-        <a href="{{ route('suppliers.create') }}" class="btn btn-success">Create Supplier</a>
-    </div>
-
-    <table class="table">
+    <table class="table table-dark">
         <thead>
             <tr>
                 <th>Id</th>

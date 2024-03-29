@@ -14,7 +14,7 @@
         <a href="{{ route('suppliers.create') }}" class="btn btn-success">Create Supplier</a>
     </div>
 
-    <table class="table">
+    <table class="table table table-dark">
         <thead>
             <tr>
                 <th>Id</th>

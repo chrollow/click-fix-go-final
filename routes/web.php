@@ -3,6 +3,7 @@
 use App\Models\Technician;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QueueController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\TechnicianQueueController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
 Route::get('/homepage', [DeviceController::class, 'index'])->name('homepage.index');
 
@@ -54,7 +56,12 @@ Route::middleware(['admin_or_technician'])->group(function () {
     // Add more routes as needed
 });
 
-
+Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
+Route::get('/stocks/create', [StockController::class, 'create'])->name('stocks.create');
+Route::post('/stocks', [StockController::class, 'store'])->name('stocks.store');
+Route::get('/stocks/{stock}/edit', [StockController::class, 'edit'])->name('stocks.edit');
+Route::put('/stocks/{stock}', [StockController::class, 'update'])->name('stocks.update');
+Route::delete('/stocks/{stock}', [StockController::class, 'destroy'])->name('stocks.destroy');
 
 // Route::group(['middleware' => 'admin'], function () {
 //     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
